@@ -185,5 +185,18 @@ footer {
   © 2026 duehy · Fantasy Archive
 </footer>
 
+<audio id="bgm" src="샤인_V2.mp3" autoplay loop></audio>
+
+<script>
+  const bgm = document.getElementById("bgm");
+  bgm.volume = 0.4;
+
+  bgm.play().catch(() => {
+    document.addEventListener("click", () => {
+      bgm.play();
+    }, { once: true });
+  });
+</script>
+
 </body>
 </html>
