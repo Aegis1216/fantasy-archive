@@ -1,11 +1,182 @@
+
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8">
-  <title>판타지 아카이브</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>판타지 아카이브 | duehy</title>
+<style>
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  font-family: Arial, "Malgun Gothic", sans-serif;
+  background: #080c16;
+  color: #eaf2ff;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+  padding: 22px 7%;
+  background: #0e1830;
+  border-bottom: 1px solid #24518b;
+}
+
+.logo {
+  color: #65b6ff;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+nav a {
+  color: #d7e9ff;
+  text-decoration: none;
+  margin-left: 18px;
+}
+
+.hero {
+  padding: 110px 7%;
+  text-align: center;
+  background: radial-gradient(
+    ellipse at top,
+    #194c96 0%,
+    #101e3d 48%,
+    #080c16 90%
+  );
+}
+
+.hero h1 {
+  font-size: clamp(36px, 6vw, 65px);
+  margin: 20px 0;
+}
+
+.hero h1 span {
+  color: #65b6ff;
+  text-shadow: 0 0 25px #338cff;
+}
+
+.hero p {
+  color: #bed7fa;
+  line-height: 1.9;
+}
+
+.button {
+  display: inline-block;
+  margin-top: 24px;
+  padding: 15px 30px;
+  border-radius: 8px;
+  background: #338cff;
+  color: white;
+  text-decoration: none;
+  box-shadow: 0 0 25px #338cff66;
+}
+
+.works {
+  max-width: 1200px;
+  margin: auto;
+  padding: 65px 7%;
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 22px;
+  margin-top: 30px;
+}
+
+.card {
+  overflow: hidden;
+  background: #111e38;
+  border: 1px solid #28538a;
+  border-radius: 12px;
+  transition: 0.2s;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  border-color: #65b6ff;
+  box-shadow: 0 0 22px #338cff44;
+}
+
+.cover {
+  height: 230px;
+  display: grid;
+  place-items: center;
+  background: linear-gradient(135deg, #2156a5, #10182a);
+  color: #d4eaff;
+  font-weight: bold;
+}
+
+.info { padding: 22px; }
+.info p { color: #b4c9e8; line-height: 1.7; }
+
+footer {
+  padding: 30px;
+  text-align: center;
+  color: #91a9ca;
+  border-top: 1px solid #24416b;
+}
+</style>
 </head>
 <body>
-  <h1>판타지 아카이브</h1>
-  <p>duehy의 판타지 세계에 오신 것을 환영합니다.</p>
+
+<header>
+  <div class="logo">✦ FANTASY ARCHIVE</div>
+  <nav>
+    <a href="#home">홈</a>
+    <a href="#works">작품 목록</a>
+  </nav>
+</header>
+
+<main>
+  <section class="hero" id="home">
+    <p>DUEHY'S FANTASY WORLD</p>
+    <h1>판타지 <span>아카이브</span></h1>
+    <p>수많은 세계와 그 안에 살아가는 존재들.<br>
+    duehy가 만들어가는 판타지의 기록.</p>
+    <a href="#works" class="button">세계관 탐색하기</a>
+  </section>
+
+  <section class="works" id="works">
+    <h2>작품 아카이브</h2>
+    <p>다양한 세계관과 캐릭터들의 이야기를 만나보세요.</p>
+
+    <div class="cards">
+      <article class="card">
+        <div class="cover">WORLD 01</div>
+        <div class="info">
+          <h3>첫 번째 작품</h3>
+          <p>작품 소개와 대표 이미지가 들어갈 공간입니다.</p>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="cover">WORLD 02</div>
+        <div class="info">
+          <h3>두 번째 작품</h3>
+          <p>새로운 세계관을 위한 공간입니다.</p>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="cover">COMING SOON</div>
+        <div class="info">
+          <h3>새로운 세계</h3>
+          <p>앞으로 추가될 작품을 위한 공간입니다.</p>
+        </div>
+      </article>
+    </div>
+  </section>
+</main>
+
+<footer>
+  © 2026 duehy · Fantasy Archive
+</footer>
+
 </body>
 </html>
