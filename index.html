@@ -185,18 +185,64 @@ footer {
   © 2026 duehy · Fantasy Archive
 </footer>
 
+
+<button id="musicToggle" type="button" style="
+  position: fixed;
+  top: 72px;
+  right: 20px;
+  z-index: 9999;
+  background: #142849;
+  color: white;
+  border: 1px solid #5794dd;
+  border-radius: 25px;
+  padding: 10px 16px;
+  cursor: pointer;
+  font-size: 14px;
+">♫ 음악 켜기</button>
+
 <audio id="bgm" src="샤인_V2.mp3" autoplay loop></audio>
 
 <script>
   const bgm = document.getElementById("bgm");
+  const musicToggle = document.getElementById("musicToggle");
+  let userPaused = false;
+
   bgm.volume = 0.4;
 
-  bgm.play().catch(() => {
-    document.addEventListener("click", () => {
-      bgm.play();
-    }, { once: true });
+  function updateMusicButton() {
+    musicToggle.textContent = bgm.paused
+      ? "♫ 음악 켜기"
+      : "♫ 음악 끄기";
+  }
+
+  musicToggle.addEventListener("click", () => {
+    if (bgm.paused) {
+      userPaused = false;
+      bgm.play().catch(() => {});
+    } else {
+      userPaused = true;
+      bgm.pause();
+    }
   });
+
+  bgm.addEventListener("play", updateMusicButton);
+  bgm.addEventListener("pause", updateMusicButton);
+
+  bgm.play().catch(() => {});
+
+  document.addEventListener("click", (event) => {
+    if (
+      event.target !== musicToggle &&
+      !userPaused &&
+      bgm.paused
+    ) {
+      bgm.play().catch(() => {});
+    }
+  });
+
+  updateMusicButton();
 </script>
+
 
 </body>
 </html>
