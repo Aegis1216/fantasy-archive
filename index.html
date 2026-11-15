@@ -308,6 +308,40 @@ document.addEventListener("click", () => {
 </script>
 
 
+<script>
+async function updateVisitors() {
+  const base = "https://fantasyarchive2026.goatcounter.com/counter/TOTAL.json";
+
+  const parts = new Intl.DateTimeFormat("en-US", {
+    timeZone: "Asia/Seoul",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit"
+  }).formatToParts(new Date());
+
+  const get = (type) => parts.find(p => p.type === type).value;
+  const today = `${get("year")}-${get("month")}-${get("day")}`;
+
+  async function loadCount(url, id) {
+    try {
+      const response = await fetch(url);
+      if (!response.ok) throw new Error("Count unavailable");
+      const data = await response.json();
+      document.getElementById(id).textContent = data.count;
+    } catch (error) {
+      document.getElementById(id).textContent = "불러오기 실패";
+    }
+  }
+
+  await Promise.all([
+    loadCount(base + "?start=" + today, "visitors-today"),
+    loadCount(base, "visitors-total")
+  ]);
+}
+
+updateVisitors();
+</script>
+
 
 <script data-goatcounter="https://fantasyarchive2026.goatcounter.com/count"
         async src="//gc.zgo.at/count.js"></script>
