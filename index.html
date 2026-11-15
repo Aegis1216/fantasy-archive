@@ -186,62 +186,107 @@ footer {
 </footer>
 
 
-<button id="musicToggle" type="button" style="
-  position: fixed;
-  top: 72px;
-  right: 20px;
-  z-index: 9999;
-  background: #142849;
-  color: white;
-  border: 1px solid #5794dd;
-  border-radius: 25px;
-  padding: 10px 16px;
-  cursor: pointer;
-  font-size: 14px;
-">♫ 음악 켜기</button>
 
-<audio id="bgm" src="샤인_V2.mp3" autoplay loop></audio>
+<!-- 음악 플레이어 -->
+<div id="music-player" style="
+  position:fixed;
+  top:72px;
+  right:20px;
+  z-index:9999;
+  background:#142849;
+  color:white;
+  border:1px solid #5794dd;
+  border-radius:15px;
+  padding:12px 16px;
+  text-align:center;
+  box-shadow:0 4px 12px #0006;
+">
+  <div id="song-title" style="
+    font-size:13px;
+    margin-bottom:10px;
+    max-width:220px;
+    overflow-wrap:anywhere;
+  "></div>
+
+  <button id="prev-song" type="button">⏮</button>
+  <button id="play-song" type="button">▶</button>
+  <button id="next-song" type="button">⏭</button>
+</div>
+
+<audio id="bgm" preload="auto"></audio>
 
 <script>
-  const bgm = document.getElementById("bgm");
-  const musicToggle = document.getElementById("musicToggle");
-  let userPaused = false;
+const songs = [
+  "사랑하는사람을위해부르는노래.mp3",
+  "늑대소녀.mp3",
+  "비내리는날그대.mp3"
+];
 
-  bgm.volume = 0.4;
+let currentSong = 0;
+let userPaused = false;
 
-  function updateMusicButton() {
-    musicToggle.textContent = bgm.paused
-      ? "♫ 음악 켜기"
-      : "♫ 음악 끄기";
-  }
+const bgm = document.getElementById("bgm");
+const playBtn = document.getElementById("play-song");
+const songTitle = document.getElementById("song-title");
 
-  musicToggle.addEventListener("click", () => {
-    if (bgm.paused) {
-      userPaused = false;
-      bgm.play().catch(() => {});
-    } else {
-      userPaused = true;
-      bgm.pause();
-    }
-  });
+bgm.volume = 0.4;
 
-  bgm.addEventListener("play", updateMusicButton);
-  bgm.addEventListener("pause", updateMusicButton);
+function loadSong() {
+  bgm.src = songs[currentSong];
+  songTitle.textContent = songs[currentSong].replace(/\.mp3$/i, "");
+}
 
+function playMusic() {
   bgm.play().catch(() => {});
+}
 
-  document.addEventListener("click", (event) => {
-    if (
-      event.target !== musicToggle &&
-      !userPaused &&
-      bgm.paused
-    ) {
-      bgm.play().catch(() => {});
-    }
-  });
+function nextSong() {
+  currentSong = (currentSong + 1) % songs.length;
+  loadSong();
+  userPaused = false;
+  playMusic();
+}
 
-  updateMusicButton();
+function prevSong() {
+  currentSong = (currentSong - 1 + songs.length) % songs.length;
+  loadSong();
+  userPaused = false;
+  playMusic();
+}
+
+document.getElementById("next-song").addEventListener("click", nextSong);
+document.getElementById("prev-song").addEventListener("click", prevSong);
+
+playBtn.addEventListener("click", () => {
+  if (bgm.paused) {
+    userPaused = false;
+    playMusic();
+  } else {
+    userPaused = true;
+    bgm.pause();
+  }
+});
+
+bgm.addEventListener("play", () => {
+  playBtn.textContent = "⏸";
+});
+
+bgm.addEventListener("pause", () => {
+  playBtn.textContent = "▶";
+});
+
+bgm.addEventListener("ended", nextSong);
+
+loadSong();
+playMusic();
+
+document.addEventListener("click", () => {
+  if (!userPaused && bgm.paused) {
+    playMusic();
+  }
+}, { once: true });
 </script>
+
 
 
 </body>
